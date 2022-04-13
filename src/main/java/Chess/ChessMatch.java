@@ -8,13 +8,26 @@ import Chess.Pieces.King;
 import Chess.Pieces.Rook;
 
 public class ChessMatch {
+    private int turn;
+    private Color currentPlayer;
     private Board board;
 
-    //Dimensão do tabuleiro
+    //Dimensão do tabuleiro e definições de inicialização
     public ChessMatch(){
+        turn = 1;
+        currentPlayer = Color.WHITE;
         board = new Board(8,8);
         initialSetup();
     }
+
+    public int getTurn(){
+        return turn;
+    }
+
+    public Color getCurrentPlayer(){
+        return currentPlayer;
+    }
+
 
     //Retorna a matriz de peças de xadez correspondente a esse partida.
     public ChessPiece[][] getPieces(){
@@ -42,12 +55,17 @@ public class ChessMatch {
         validateTargetPosition(source,targer);
         //Operação responsavel pela captura da peça
         Piece capturedPiece = makeMove(source, targer);
+        nextTurn();
         return  (ChessPiece) capturedPiece;
     }
 
     private void validateSourcePosition(Position position){
         if(!board.thereIsAPiece(position)){
             throw new ChessException("Não existe peça na poosição de origem!");
+        }
+        //Validando se a peça é do jogador atual ou do adiversario
+        if(currentPlayer != ((ChessPiece)board.piece(position)).getColor()){
+            throw new ChessException("A peça escolhida não é sua!");
         }
         if(!board.piece(position).isTherAnyPossibleMove()){
             throw new ChessException("Não existe movimentos possivel para esta peça!");
@@ -70,6 +88,13 @@ public class ChessMatch {
         board.placePiece(p, target);
         return capturePiece;
     }
+
+    private void nextTurn(){
+        turn++;
+        //Troca de jogador
+        currentPlayer = (currentPlayer == Color.WHITE) ? Color.BLACK : Color.WHITE;
+    }
+
 
     //Metodo recebe as coordenadas do xadez, passo a posição nas coordenadas do jogo
     private void placeNewPiece(char column, int row, ChessPiece piece){
