@@ -7,16 +7,23 @@ import BordGame.Position;
 import Chess.Pieces.King;
 import Chess.Pieces.Rook;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ChessMatch {
     private int turn;
     private Color currentPlayer;
     private Board board;
 
+    //Lista para peças do tabuleiro e peças capturadas
+    private List<Piece> piecesOnTheBoard =new ArrayList<>();
+    private List<Piece> capturedPieces = new ArrayList<>();
+
     //Dimensão do tabuleiro e definições de inicialização
     public ChessMatch(){
+        board = new Board(8,8);
         turn = 1;
         currentPlayer = Color.WHITE;
-        board = new Board(8,8);
         initialSetup();
     }
 
@@ -78,14 +85,17 @@ public class ChessMatch {
         }
 
     }
-
-
     //Remove pela da origem e da de destino
     private Piece makeMove(Position source, Position target){
         Piece p = board.removePiece(source);
         Piece capturePiece = board.removePiece(target);
-        //Colocando posição da origem na de destino
+        //Colocando posição da origem para o destino
         board.placePiece(p, target);
+        if(capturePiece != null){
+            piecesOnTheBoard.remove(capturePiece);
+            capturedPieces.add(capturePiece);
+        }
+
         return capturePiece;
     }
 
@@ -99,6 +109,7 @@ public class ChessMatch {
     //Metodo recebe as coordenadas do xadez, passo a posição nas coordenadas do jogo
     private void placeNewPiece(char column, int row, ChessPiece piece){
         board.placePiece(piece,new ChessPosition(column, row).toPosition());
+        piecesOnTheBoard.add(piece);
     }
 
     //Metodo responsavel por inicar a partida de Xadez colocando as peças no tabuleiro
