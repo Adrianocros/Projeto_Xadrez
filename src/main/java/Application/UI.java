@@ -58,6 +58,9 @@ public class UI {
         System.out.println();
         System.out.println("Turno: " + chessMatch.getTurn());
         System.out.println("Esperando jogador " +  chessMatch.getCurrentPlayer() + " ,realizar a jogada");
+        if(chessMatch.getCheck()){
+            System.out.println("#### CHECK !!! ####");
+        }
     }
 
 
@@ -109,8 +112,8 @@ public class UI {
     //Metodo que informa a caputra de peças
     private static void printCapturedPieces(List<ChessPiece> captured){
         //Filtrando a lista  e todos que são da cor branca e pretas.
-        List<ChessPiece> white = captured.stream().filter(x -> x.getColor()== Color.WHITE).collect(Collectors.toList());
-        List<ChessPiece> black = captured.stream().filter(x -> x.getColor()== Color.BLACK).collect(Collectors.toList());
+        List<ChessPiece> white = captured.stream().filter(x -> x.getColor() == Color.WHITE).collect(Collectors.toList());
+        List<ChessPiece> black = captured.stream().filter(x -> x.getColor() == Color.BLACK).collect(Collectors.toList());
         System.out.println("Peças capturadas: ");
 
         System.out.print("Brancas: ");

@@ -43,10 +43,15 @@ public class Program {
                     captured.add(capturedPiece);
                 }
 
-            }catch (ChessException | InputMismatchException e){
+           }
+            catch (ChessException e) {
                 System.out.println(e.getMessage());
                 scanner.nextLine();
-           }
+            }
+            catch (InputMismatchException e) {
+                System.out.println(e.getMessage());
+                scanner.nextLine();
+            }
         }
 
     }
