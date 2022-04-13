@@ -41,6 +41,9 @@ public class ChessMatch {
         if(!board.thereIsAPiece(position)){
             throw new ChessException("Não existe peça na poosição de origem!");
         }
+        if(!board.piece(position).isTherAnyPossibleMove()){
+            throw new ChessException("Não existe movimentos possivel para esta peça!");
+        }
     }
 
     //Remove pela da origem e da de destino
