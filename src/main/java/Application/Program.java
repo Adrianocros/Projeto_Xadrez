@@ -24,18 +24,18 @@ public class Program {
                 System.out.print("Digite a posição: ");
                 ChessPosition source = UI.readChessPosition(scanner);
 
+                boolean[][] possibleMoves = chessMatch.possibleMoves(source);
+                UI.clearScreen();
+                UI.printBoard(chessMatch.getPieces(), possibleMoves);
                 System.out.println();
                 System.out.print("Informe o destino: ");
                 ChessPosition target = UI.readChessPosition(scanner);
 
                 ChessPiece capturedPiece = chessMatch.performChessMove(source, target);
-            }catch (ChessException e){
+            }catch (ChessException | InputMismatchException e){
                 System.out.println(e.getMessage());
                 scanner.nextLine();
-            }catch (InputMismatchException e){
-                System.out.println(e.getMessage());
-                scanner.nextLine();
-            }
+           }
         }
 
     }
