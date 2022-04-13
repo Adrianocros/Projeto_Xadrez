@@ -2,6 +2,7 @@ package Chess;
 //Classe que detem as regras do jogo
 
 import BordGame.Board;
+import BordGame.Piece;
 import BordGame.Position;
 import Chess.Pieces.King;
 import Chess.Pieces.Rook;
@@ -24,6 +25,31 @@ public class ChessMatch {
             }
         }
         return mat;
+    }
+
+    public ChessPiece performChessMove(ChessPosition sourcePosition, ChessPosition targetPosition){
+        Position source = sourcePosition.toPosition();
+        Position targer = targetPosition.toPosition();
+        //Validando se na posição de origem ha uma peça
+        validateSourcePosition(source);
+        //Operação responsavel pela captura da peça
+        Piece capturedPiece = makeMove(source, targer);
+        return  (ChessPiece) capturedPiece;
+    }
+
+    private void validateSourcePosition(Position position){
+        if(!board.thereIsAPiece(position)){
+            throw new ChessException("Não existe peça na poosição de origem!");
+        }
+    }
+
+    //Remove pela da origem e da de destino
+    private Piece makeMove(Position source, Position target){
+        Piece p = board.removePiece(source);
+        Piece capturePiece = board.removePiece(target);
+        //Colocando posição da origem na de destino
+        board.placePiece(p, target);
+        return capturePiece;
     }
 
     //Metodo recebe as coordenadas do xadez, passo a posição nas coordenadas do jogo
