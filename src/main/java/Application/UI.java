@@ -47,7 +47,7 @@ public class UI {
             int  row = Integer.parseInt(s.substring(1));
             return new ChessPosition(column, row);
         }catch (RuntimeException e){
-            throw  new InputMismatchException("Erro na posição do Xadrez : Valores validos são de a1 a h8");
+            throw  new InputMismatchException("Erro na posicao do Xadrez : Valores validos sao de a1 a h8");
         }
     }
     //Imprimindo a partida
@@ -59,13 +59,13 @@ public class UI {
         System.out.println("Turno: " + chessMatch.getTurn());
         System.out.println("Esperando jogador " +  chessMatch.getCurrentPlayer() + " ,realizar a jogada");
         if(chessMatch.getCheck()){
-            System.out.println("#### CHECK !!! ####");
+            System.out.println("#### XEQUE !!! ####");
         }
     }
 
 
 
-    static void printBoard(ChessPiece[][] pieces){
+    public static void printBoard(ChessPiece[][] pieces){
         for( int i=0; i<pieces.length;i++){
             System.out.print((8 - i) + " ");
             for (int j=0;j<pieces.length;j++) {
@@ -77,7 +77,7 @@ public class UI {
     }
 
     //Colorinado a tabuleiro com movimentos possiveis e marcados
-    static void printBoard(ChessPiece[][] pieces, boolean[][] possibleMoves){
+    public static void printBoard(ChessPiece[][] pieces, boolean[][] possibleMoves){
         for( int i=0; i<pieces.length;i++){
             System.out.print((8 - i) + " ");
             for (int j=0;j<pieces.length;j++) {
@@ -114,7 +114,7 @@ public class UI {
         //Filtrando a lista  e todos que são da cor branca e pretas.
         List<ChessPiece> white = captured.stream().filter(x -> x.getColor() == Color.WHITE).collect(Collectors.toList());
         List<ChessPiece> black = captured.stream().filter(x -> x.getColor() == Color.BLACK).collect(Collectors.toList());
-        System.out.println("Peças capturadas: ");
+        System.out.println("Pecas capturadas: ");
 
         System.out.print("Brancas: ");
         //Imprimindo Array de valores no Java

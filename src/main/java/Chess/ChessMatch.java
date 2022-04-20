@@ -19,7 +19,7 @@ public class ChessMatch {
 
 
     //Lista para peças do tabuleiro e peças capturadas
-    private List<Piece> piecesOnTheBoard =new ArrayList<>();
+    private List<Piece> piecesOnTheBoard = new ArrayList<>();
     private List<Piece> capturedPieces = new ArrayList<>();
 
     //Dimensão do tabuleiro e definições de inicialização
@@ -72,7 +72,7 @@ public class ChessMatch {
         //Valida se o jogador se colocou em check
         if(testCheck(currentPlayer)){
             undoMove(source,targer,capturedPiece);
-            throw  new ChessException("Voce se colocou em CHEK, MOVIMENTO NAO PERMITIDO !");
+            throw  new ChessException("### Voce se colocou em XEQUE, MOVIMENTO NAO PERMITIDO ! ###");
         }
         //Valida se o oponente se colocou em check
         check = (testCheck(opponent(currentPlayer))) ? true : false;
@@ -83,20 +83,20 @@ public class ChessMatch {
 
     private void validateSourcePosition(Position position){
         if(!board.thereIsAPiece(position)){
-            throw new ChessException("Não existe peça na poosição de origem!");
+            throw new ChessException("Não existe peca na poosicao de origem!");
         }
         //Validando se a peça é do jogador atual ou do adiversario
         if(currentPlayer != ((ChessPiece)board.piece(position)).getColor()){
             throw new ChessException("A peça escolhida não é sua!");
         }
         if(!board.piece(position).isTherAnyPossibleMove()){
-            throw new ChessException("Não existe movimentos possivel para esta peça!");
+            throw new ChessException("Nao existe movimentos possivel para esta peca!");
         }
     }
 
     private void validateTargetPosition(Position source,Position targer){
         if(!board.piece(source).possibleMove(targer)){
-            throw  new ChessException("A peça escolhida não pode realizar esta movimento !");
+            throw  new ChessException("A peca escolhida nao pode realizar esta movimento !");
         }
 
     }
@@ -146,7 +146,7 @@ public class ChessMatch {
                 return (ChessPiece)p;
             }
         }
-        throw new IllegalStateException("Não foi encontrado " + color + " um Rei no tabuleiro !");
+        throw new IllegalStateException("Nao foi encontrado " + color + " um Rei no tabuleiro !");
     }
     //Metodo verifica se o Rei esta em CHECK por alguma peça do tabuleiro
     private boolean testCheck(Color color){
@@ -168,6 +168,18 @@ public class ChessMatch {
         board.placePiece(piece,new ChessPosition(column, row).toPosition());
         piecesOnTheBoard.add(piece);
     }
+
+
+//    private void initialSetup(){
+//        placeNewPiece('h', 7, new Rook(board, Color.WHITE));
+//        placeNewPiece('d', 1, new Rook(board, Color.WHITE));
+//        placeNewPiece('e', 1, new King(board, Color.WHITE));
+//
+//        placeNewPiece('b', 8, new Rook(board, Color.BLACK));
+//        placeNewPiece('a', 8, new King(board, Color.BLACK));
+//
+//    }
+
 
     //Metodo responsavel por inicar a partida de Xadez colocando as peças no tabuleiro
     private void initialSetup(){
