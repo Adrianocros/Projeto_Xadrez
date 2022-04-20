@@ -19,7 +19,7 @@ public class Program {
 
         //Passando as peças capturdas com argumento para criar a lista
 
-        while (true) {
+        while (!chessMatch.getCheckMate()) {
             try {
                 //Limpando tela
                 UI.clearScreen();
@@ -44,15 +44,13 @@ public class Program {
                 }
 
            }
-            catch (ChessException e) {
-                System.out.println(e.getMessage());
-                scanner.nextLine();
-            }
-            catch (InputMismatchException e) {
+            catch (ChessException | InputMismatchException e) {
                 System.out.println(e.getMessage());
                 scanner.nextLine();
             }
         }
+        UI.clearScreen();
+        UI.printMatch(chessMatch,captured);
 
     }
 }

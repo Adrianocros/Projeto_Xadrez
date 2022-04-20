@@ -16,6 +16,7 @@ public class ChessMatch {
     private Color currentPlayer;
     private Board board;
     private boolean check;
+    private boolean checkMate;
 
 
     //Lista para peças do tabuleiro e peças capturadas
@@ -36,6 +37,11 @@ public class ChessMatch {
 
     public Color getCurrentPlayer(){
         return currentPlayer;
+    }
+
+
+    public boolean getCheckMate(){
+        return checkMate;
     }
 
     //Propriedada para ter acesso ao programa principal
@@ -77,7 +83,12 @@ public class ChessMatch {
         //Valida se o oponente se colocou em check
         check = (testCheck(opponent(currentPlayer))) ? true : false;
 
-        nextTurn();
+        //verifique se a jogada deixou em xeque mata
+        if(testCheckMate(opponent(currentPlayer))){
+            checkMate = true;
+        }else {
+            nextTurn();
+        }
         return  (ChessPiece) capturedPiece;
     }
 
@@ -161,6 +172,34 @@ public class ChessMatch {
             }
         }
         return false;
+    }
+    //Logica para o Xeque Mate
+    private boolean testCheckMate(Color color){
+        if(!testCheck(color)){
+            return false;
+        }
+        List<Piece> list = piecesOnTheBoard.stream().filter(x -> ((ChessPiece)x).getColor() == color).collect(Collectors.toList());
+        for(Piece p : list){
+           boolean[][] mat = p.possibleMoves();
+           for(int i=0; i<board.getRows(); i++){
+               for(int j=0; j<board.getRows(); j++){
+                   if(mat[i][j]){
+                        Position source = ((ChessPiece)p).getChessPosition().toPosition();
+                        Position target = new Position(i,j);
+                        Piece capturedPiece = makeMove(source, target);
+                        //Teste se o Rei da minha cor esta em Xeque.
+                        boolean testCheck = testCheck(color);
+                        undoMove(source, target,capturedPiece);
+                        if(!testCheck){
+                            return false;
+                        }
+                   }
+               }
+           }
+        }
+        return true;
+
+
     }
 
     //Metodo recebe as coordenadas do xadez, passo a posição nas coordenadas do jogo
