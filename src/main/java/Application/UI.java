@@ -60,7 +60,7 @@ public class UI {
         if(!chessMatch.getCheckMate()){
             System.out.println("Esperando jogador " +  chessMatch.getCurrentPlayer() + " ,realizar a jogada");
             if(chessMatch.getCheck()){
-                System.out.println("### O Jagordor " + chessMatch.getCurrentPlayer() + " esta em XEQUE !!! ####");
+                System.out.println("### O Jogador " + chessMatch.getCurrentPlayer() + " esta em XEQUE !!! ####");
         }
 
         }
@@ -69,8 +69,6 @@ public class UI {
             System.out.println("Vencedor : " + chessMatch.getCurrentPlayer());
         }
     }
-
-
 
     public static void printBoard(ChessPiece[][] pieces){
         for( int i=0; i<pieces.length;i++){

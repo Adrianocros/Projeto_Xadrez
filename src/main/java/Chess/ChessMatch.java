@@ -113,10 +113,12 @@ public class ChessMatch {
     }
     //Remove pela da origem e da de destino
     private Piece makeMove(Position source, Position target){
-        Piece p = board.removePiece(source);
+        ChessPiece p = (ChessPiece) board.removePiece(source);
+        p.increaseMoveCount();
         Piece capturePiece = board.removePiece(target);
         //Colocando posição da origem para o destino
         board.placePiece(p, target);
+
         if(capturePiece != null){
             piecesOnTheBoard.remove(capturePiece);
             capturedPieces.add(capturePiece);
@@ -127,7 +129,8 @@ public class ChessMatch {
 
     //Desfaz o movimento do Rei caso ele se coloque em cheque
     private void undoMove(Position source,Position target, Piece capturedPiece){
-        Piece p = board.removePiece(target);
+       ChessPiece p = (ChessPiece)board.removePiece(target);
+       p.decreaseMoveCount();
         board.placePiece(p, source);
 
         //Caso tenha capturado volta a peça para posição destino
@@ -209,33 +212,33 @@ public class ChessMatch {
     }
 
 
-//    private void initialSetup(){
-//        placeNewPiece('h', 7, new Rook(board, Color.WHITE));
-//        placeNewPiece('d', 1, new Rook(board, Color.WHITE));
-//        placeNewPiece('e', 1, new King(board, Color.WHITE));
-//
-//        placeNewPiece('b', 8, new Rook(board, Color.BLACK));
-//        placeNewPiece('a', 8, new King(board, Color.BLACK));
-//
-//    }
+    private void initialSetup(){
+        placeNewPiece('h', 7, new Rook(board, Color.WHITE));
+        placeNewPiece('d', 1, new Rook(board, Color.WHITE));
+        placeNewPiece('e', 1, new King(board, Color.WHITE));
+
+        placeNewPiece('b', 8, new Rook(board, Color.BLACK));
+        placeNewPiece('a', 8, new King(board, Color.BLACK));
+
+    }
 
 
     //Metodo responsavel por inicar a partida de Xadez colocando as peças no tabuleiro
-    private void initialSetup(){
-        placeNewPiece('c', 1, new Rook(board, Color.WHITE));
-        placeNewPiece('c', 2, new Rook(board, Color.WHITE));
-        placeNewPiece('d', 2, new Rook(board, Color.WHITE));
-        placeNewPiece('e', 2, new Rook(board, Color.WHITE));
-        placeNewPiece('e', 1, new Rook(board, Color.WHITE));
-        placeNewPiece('d', 1, new King(board, Color.WHITE));
-
-        placeNewPiece('c', 7, new Rook(board, Color.BLACK));
-        placeNewPiece('c', 8, new Rook(board, Color.BLACK));
-        placeNewPiece('d', 7, new Rook(board, Color.BLACK));
-        placeNewPiece('e', 7, new Rook(board, Color.BLACK));
-        placeNewPiece('e', 8, new Rook(board, Color.BLACK));
-        placeNewPiece('d', 8, new King(board, Color.BLACK));
-
-
-    }
+//    private void initialSetup(){
+//        placeNewPiece('c', 1, new Rook(board, Color.WHITE));
+//        placeNewPiece('c', 2, new Rook(board, Color.WHITE));
+//        placeNewPiece('d', 2, new Rook(board, Color.WHITE));
+//        placeNewPiece('e', 2, new Rook(board, Color.WHITE));
+//        placeNewPiece('e', 1, new Rook(board, Color.WHITE));
+//        placeNewPiece('d', 1, new King(board, Color.WHITE));
+//
+//        placeNewPiece('c', 7, new Rook(board, Color.BLACK));
+//        placeNewPiece('c', 8, new Rook(board, Color.BLACK));
+//        placeNewPiece('d', 7, new Rook(board, Color.BLACK));
+//        placeNewPiece('e', 7, new Rook(board, Color.BLACK));
+//        placeNewPiece('e', 8, new Rook(board, Color.BLACK));
+//        placeNewPiece('d', 8, new King(board, Color.BLACK));
+//
+//
+//    }
 }
